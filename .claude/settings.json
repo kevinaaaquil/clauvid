@@ -1,0 +1,9 @@
+{
+  "env": {
+    "HYPERFRAMES_PYTHON": "/Users/eshansingh/dev/clauvid/.venv-media/bin/python",
+    "HF_HOME": "/Users/eshansingh/dev/clauvid/.cache/huggingface",
+    "UV_CACHE_DIR": "/Users/eshansingh/dev/clauvid/.cache/uv",
+    "UV_PYTHON_INSTALL_DIR": "/Users/eshansingh/dev/clauvid/.tools/uv-python",
+    "HYPERFRAMES_FONT_CACHE_DIR": "/Users/eshansingh/dev/clauvid/.cache/hyperframes/fonts"
+  }
+}

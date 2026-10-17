@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>clauvid</title>
+<style>
+  :root {
+    --bg: #0b0f17; --panel: #131a26; --panel2: #1a2333; --line: #243044;
+    --text: #e6edf3; --muted: #8b98a9; --accent: #5cc8ff; --good: #4ade80;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  header { display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+    border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 5; }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: .02em; }
+  header h1 span { color: var(--accent); }
+  select { background: var(--panel2); color: var(--text); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 10px; font: inherit; max-width: 55vw; }
+  #toggle { margin-left: auto; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; }
+  .layout { display: grid; grid-template-columns: 280px 1fr; height: calc(100% - 53px); }
+  aside { border-right: 1px solid var(--line); overflow-y: auto; padding: 12px; background: var(--panel); }
+  aside h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 14px 6px 6px; }
+  .item { display: block; width: 100%; text-align: left; padding: 9px 10px; border-radius: 8px; margin-bottom: 4px; }
+  .item:hover { background: var(--panel2); }
+  .item.active { background: var(--panel2); outline: 1px solid var(--accent); }
+  .item .name { display: block; font-weight: 600; word-break: break-all; }
+  .item .meta { display: block; color: var(--muted); font-size: 12px; }
+  .badge { font-size: 10px; color: var(--bg); background: var(--good); border-radius: 4px; padding: 1px 5px; margin-left: 6px; vertical-align: 2px; }
+  main { overflow-y: auto; padding: 16px; }
+  video { width: 100%; max-height: 70vh; background: #000; border-radius: 10px; display: block; }
+  .title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 12px 0 4px; }
+  .title h3 { margin: 0; font-size: 18px; word-break: break-all; }
+  .title .meta { color: var(--muted); font-size: 13px; }
+  .nav { display: flex; gap: 8px; margin: 10px 0 18px; }
+  .nav button, .nav a { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; color: var(--text); text-decoration: none; font-size: 14px; }
+  .nav button:disabled { opacity: .35; cursor: default; }
+  details { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; }
+  summary { padding: 10px 14px; cursor: pointer; font-weight: 600; }
+  summary small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+  pre { margin: 0; padding: 0 14px 14px; white-space: pre-wrap; word-break: break-word; color: #c9d4e0;
+    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; max-height: 60vh; overflow: auto; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .badge.svg { background: var(--accent); }
+  .svgwrap { display: block; border-radius: 10px; overflow: hidden; max-height: 70vh;
+    background: #fff repeating-conic-gradient(#e9edf2 0% 25%, #fff 0% 50%) 0 0 / 24px 24px; }
+  .svgwrap img { display: block; width: 100%; max-height: 70vh; object-fit: contain; }
+  @media (max-width: 760px) { .svgwrap, .svgwrap img { max-height: 50vh; } }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--accent);
+    color: var(--bg); font-weight: 600; padding: 8px 14px; border-radius: 999px; z-index: 20; }
+  .nav { flex-wrap: wrap; }
+  .nav button, .nav a { min-height: 40px; display: inline-flex; align-items: center; }
+  .player { max-width: 1280px; margin: 0 auto; }
+  @media (max-width: 760px) {
+    header { flex-wrap: nowrap; gap: 8px; padding: 10px 12px; }
+    header h1 { font-size: 15px; }
+    select { flex: 1; min-width: 0; max-width: none; }
+    #toggle { margin-left: 0; white-space: nowrap; }
+    video { max-height: 45vh; border-radius: 8px; }
+    .item { padding: 12px 10px; }
+    .nav button, .nav a { flex: 1; justify-content: center; }
+    .layout { grid-template-columns: 1fr; height: auto; }
+    aside { border-right: 0; border-bottom: 1px solid var(--line); display: none; }
+    aside.open { display: block; max-height: 60vh; }
+    main { padding: 12px 16px; }
+  }
+  @media (min-width: 761px) { #toggle { display: none; } }
+  body.none #project, body.none #toggle, body.none aside { display: none; }
+  body.none .layout { grid-template-columns: 1fr; }
+  .blank { max-width: 420px; margin: 12vh auto 0; text-align: center; color: var(--muted); overflow-wrap: anywhere; }
+  .blank-icon { width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 14px; display: grid; place-items: center;
+    background: var(--panel2); border: 1px solid var(--line); color: var(--accent); font-size: 20px; }
+  .blank h2 { color: var(--text); font-size: 18px; margin: 0 0 8px; }
+  .blank p { margin: 0 0 18px; }
+  .blank code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); }
+  .blank button { border: 1px solid var(--line); border-radius: 8px; padding: 8px 16px; color: var(--text); }
+  .blank button:hover { background: var(--panel2); }
+</style>
+</head>
+<body>
+<header>
+  <h1>clau<span>vid</span></h1>
+  <select id="project" aria-label="Project"></select>
+  <button id="toggle" aria-expanded="false">Revisions ▾</button>
+</header>
+<div class="layout">
+  <aside id="side"></aside>
+  <main id="main"><div class="empty">Loading…</div></main>
+</div>
+<script>
+const $ = (s) => document.querySelector(s);
+const fmtSize = (b) => b > 1e6 ? (b / 1e6).toFixed(1) + " MB" : Math.round(b / 1e3) + " KB";
+const fmtDate = (ms) => new Date(ms).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fileUrl = (slug, dir, name) => `files/${encodeURIComponent(slug)}/${dir}/${encodeURIComponent(name)}`;
+
+let data = [], proj = null, list = [], cur = 0;
+
+// Shareable URL: ?project=<slug>&rev=<final|v02-layout-mono>&t=<seconds>
+const params = () => new URLSearchParams(location.search);
+const base = (n) => n.replace(/\.[^.]+$/, "").toLowerCase();
+const revKey = (v) => v.dir === "final" ? "final" : v.dir === "characters" ? `char-${v.char}-${base(v.name)}` : base(v.name);
+const srcOf = (v) => v.dir === "characters"
+  ? `files/${encodeURIComponent(proj.slug)}/characters/${encodeURIComponent(v.char)}/${encodeURIComponent(v.name)}`
+  : fileUrl(proj.slug, v.dir, v.name);
+function linkFor(v, t = 0) {
+  const q = new URLSearchParams({ project: proj.slug, rev: revKey(v) });
+  if (t > 0) q.set("t", t);
+  return location.pathname + "?" + q.toString();
+}
+async function copyLink(rel) {
+  const url = location.origin + rel;
+  try { await navigator.clipboard.writeText(url); toast("Link copied"); }
+  catch { prompt("Copy this link", url); }
+}
+function toast(msg) {
+  const el = Object.assign(document.createElement("div"), { className: "toast", textContent: msg });
+  document.body.append(el); setTimeout(() => el.remove(), 1600);
+}
+
+function store(k, v) { try { v === undefined ? null : localStorage.setItem(k, v); return localStorage.getItem(k); } catch { return null; } }
+
+async function load() {
+  data = await (await fetch("api/projects", { cache: "no-store" })).json();
+  const sel = $("#project");
+  sel.innerHTML = data.map((p) => `<option value="${esc(p.slug)}">${esc(p.slug)}</option>`).join("");
+  document.body.classList.toggle("none", !data.length);
+  if (!data.length) {
+    $("#main").innerHTML = `<div class="blank">
+      <div class="blank-icon">▶</div>
+      <h2>No videos yet</h2>
+      <p>Projects show up here once a draft is rendered into <code>projects/&lt;name&gt;/revisions/</code> or <code>final/</code>.</p>
+      <button id="refresh">Check again</button>
+    </div>`;
+    $("#refresh").onclick = load;
+    return;
+  }
+  const want = params().get("project") || store("clauvid.project");
+  sel.value = data.some((p) => p.slug === want) ? want : data[0].slug;
+  pick(sel.value);
+}
+
+function pick(slug) {
+  proj = data.find((p) => p.slug === slug);
+  store("clauvid.project", slug);
+  list = [
+    ...proj.final.map((v) => ({ ...v, dir: "final" })),
+    ...proj.revisions.map((v) => ({ ...v, dir: "revisions" })),
+    ...(proj.characters || []).flatMap((c) => c.svgs.map((v) => ({ ...v, dir: "characters", char: c.name, kind: "svg" }))),
+  ];
+  const want = (params().get("rev") || "").toLowerCase();
+  const i = list.findIndex((v) => [revKey(v), v.name.toLowerCase()].includes(want));
+  renderSide();
+  show(i >= 0 ? i : 0, i >= 0 ? Number(params().get("t")) || 0 : 0);
+}
+
+function renderSide() {
+  const item = (v, i) => `<button class="item" data-i="${i}">
+      <span class="name">${esc(v.name)}${v.dir === "final" ? '<span class="badge">FINAL</span>' : ""}</span>
+      <span class="meta">${fmtSize(v.size)} · ${fmtDate(v.mtime)}</span></button>`;
+  const finals = list.filter((v) => v.dir === "final");
+  const revs = list.filter((v) => v.dir === "revisions");
+  const chars = list.filter((v) => v.dir === "characters");
+  const charItem = (v, i) => `<button class="item" data-i="${i}">
+      <span class="name">${esc(v.name)}<span class="badge svg">SVG</span></span>
+      <span class="meta">${esc(v.char)} · ${fmtSize(v.size)} · ${fmtDate(v.mtime)}</span></button>`;
+  $("#side").innerHTML =
+    (finals.length ? "<h2>Final</h2>" + finals.map((v) => item(v, list.indexOf(v))).join("") : "") +
+    "<h2>Revisions (" + revs.length + ")</h2>" +
+    (revs.length ? revs.map((v) => item(v, list.indexOf(v))).join("") : '<div class="meta" style="padding:6px 10px;color:var(--muted)">None yet</div>') +
+    (chars.length ? "<h2>Characters (" + chars.length + ")</h2>" + chars.map((v) => charItem(v, list.indexOf(v))).join("") : "");
+  $("#side").querySelectorAll(".item").forEach((b) => b.onclick = () => {
+    show(+b.dataset.i);
+    $("#side").classList.remove("open"); $("#toggle").setAttribute("aria-expanded", "false");
+  });
+}
+
+function show(i, t = 0) {
+  cur = i;
+  document.querySelectorAll(".item").forEach((b) => b.classList.toggle("active", +b.dataset.i === i));
+  const v = list[i];
+  if (!v) { $("#main").innerHTML = '<div class="empty">No videos in this project yet.</div>'; return; }
+  history.replaceState(null, "", linkFor(v));
+  $("#toggle").textContent = (v.dir === "final" ? "Final" : v.dir === "characters" ? v.char : revKey(v).split("-")[0]) + " ▾";
+  const src = srcOf(v);
+  const isSvg = v.kind === "svg";
+  const charDocs = isSvg ? ((proj.characters || []).find((c) => c.name === v.char)?.docs || [])
+    .map((d) => ({ ...d, url: `files/${encodeURIComponent(proj.slug)}/characters/${encodeURIComponent(v.char)}/${encodeURIComponent(d.name)}`, dir: "character" })) : [];
+  const docs = [...charDocs, ...proj.docs.map((d) => ({ ...d, url: fileUrl(proj.slug, d.dir, d.name) }))];
+  $("#main").innerHTML = `<div class="player">
+    ${isSvg ? `<a class="svgwrap" href="${src}" target="_blank" rel="noopener"><img src="${src}" alt="${esc(v.name)}"></a>`
+            : `<video src="${src}" controls playsinline preload="auto"></video>`}
+    <div class="title"><h3>${esc(v.name)}</h3><span class="meta">${isSvg ? "character · " + esc(v.char) : v.dir} · ${fmtSize(v.size)} · ${fmtDate(v.mtime)}</span></div>
+    <div class="nav">
+      <button id="prev" ${i <= 0 ? "disabled" : ""}>← Prev</button>
+      <button id="next" ${i >= list.length - 1 ? "disabled" : ""}>Next →</button>
+      <button id="copy">Copy link</button>
+      <a href="${src}${isSvg ? "" : "?orig=1"}" download>Download</a>
+    </div>
+    <div id="docs">${docs.map((d) => `<details data-src="${d.url}">
+      <summary>${esc(d.name)}<small>${d.dir}</small></summary><pre>Loading…</pre></details>`).join("")}</div></div>`;
+  const vid = $("#main video");
+  if (vid && t) vid.addEventListener("loadedmetadata", () => { vid.currentTime = t; }, { once: true });
+  $("#copy").onclick = () => copyLink(linkFor(v, vid ? Math.floor(vid.currentTime) : 0));
+  $("#prev").onclick = () => show(cur - 1);
+  $("#next").onclick = () => show(cur + 1);
+  document.querySelectorAll("#docs details").forEach((d) => d.addEventListener("toggle", async () => {
+    if (!d.open || d.dataset.loaded) return;
+    d.dataset.loaded = 1;
+    d.querySelector("pre").textContent = await (await fetch(d.dataset.src)).text();
+  }));
+}
+
+$("#project").onchange = (e) => { history.replaceState(null, "", "?project=" + encodeURIComponent(e.target.value)); pick(e.target.value); };
+$("#toggle").onclick = () => {
+  const open = $("#side").classList.toggle("open");
+  $("#toggle").setAttribute("aria-expanded", open);
+};
+load();
+</script>
+</body>
+</html>

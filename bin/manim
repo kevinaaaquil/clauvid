@@ -1,0 +1,5 @@
+#!/bin/sh
+# Manim from clauvid/.venv-media with TinyTeX on PATH (for MathTex/Tex)
+HERE="$(cd "$(dirname "$0")/.." && pwd)"
+export PATH="$HERE/.tools/TinyTeX/bin/universal-darwin:$HERE/.venv-media/bin:$PATH"
+exec "$HERE/.venv-media/bin/manim" "$@"

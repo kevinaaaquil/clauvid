@@ -1,0 +1,25 @@
+# Allow-list: only the share platform and the workspace's supporting structure are versioned.
+# Creative work (projects/: scripts, recordings, assets, research, renders), the hyperframes/
+# scratch starter, models, caches, tools and secrets stay on this machine.
+/*
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/INSTALLED.md
+!/docs/
+!/bin/
+!/share-platform/
+!/.claude/
+/.claude/*
+!/.claude/settings.json
+!/.claude/skills/
+
+# Inside the platform: build output, dependencies and credentials.
+/share-platform/dist/
+/share-platform/.auth
+node_modules/
+
+# Never, anywhere.
+.env*
+.DS_Store
+*.tmp

@@ -1,0 +1,191 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/newsreader";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+    --font-serif: 'Newsreader Variable', Georgia, serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* "Edit bay": warm charcoal grounds, one amber tally accent. */
+.dark {
+    --background: #0E0E0F;
+    --foreground: #EDEDEE;
+    --card: #151516;
+    --card-foreground: #EDEDEE;
+    --popover: #18181A;
+    --popover-foreground: #EDEDEE;
+    --primary: #F4A63A;
+    --primary-foreground: #1A1206;
+    --secondary: #202023;
+    --secondary-foreground: #EDEDEE;
+    --muted: #202023;
+    --muted-foreground: #A1A1A8;
+    --accent: #232326;
+    --accent-foreground: #EDEDEE;
+    --destructive: #F87171;
+    --border: #2B2B2F;
+    --input: #2B2B2F;
+    --ring: #F4A63A;
+    --chart-1: #F4A63A;
+    --chart-2: #4ADE80;
+    --chart-3: #7CC4FF;
+    --chart-4: #B9A4FF;
+    --chart-5: #FF7A59;
+    --sidebar: #131314;
+    --sidebar-foreground: #EDEDEE;
+    --sidebar-primary: #F4A63A;
+    --sidebar-primary-foreground: #1A1206;
+    --sidebar-accent: #1B1B1D;
+    --sidebar-accent-foreground: #EDEDEE;
+    --sidebar-border: #232326;
+    --sidebar-ring: #F4A63A;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+@theme inline {
+  --color-brand: #F4A63A;
+  --color-brand-soft: rgb(244 166 58 / 0.14);
+  --color-faint: #8A8A92;
+  --color-header: #111112;
+  --color-raised: #1B1B1D;
+  --color-selected: #26221B;
+  --color-final: #6EE7A0;
+  --color-final-soft: rgb(74 222 128 / 0.12);
+  --color-line: #232326;
+}
+
+/* Rendered Markdown (docs + script editor) */
+.md { line-height: 1.65; overflow-wrap: anywhere; }
+.md > :first-child { margin-top: 0; }
+.md h1 { font-size: 1.6rem; font-weight: 700; margin: 1.6rem 0 0.6rem; letter-spacing: -0.01em; }
+.md h2 { font-size: 1.25rem; font-weight: 650; margin: 1.4rem 0 0.5rem; }
+.md h3 { font-size: 1.05rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
+.md p { margin: 0.6rem 0; }
+.md ul { list-style: disc; padding-left: 1.4rem; margin: 0.6rem 0; }
+.md ol { list-style: decimal; padding-left: 1.4rem; margin: 0.6rem 0; }
+.md li { margin: 0.2rem 0; }
+.md strong { font-weight: 650; color: var(--foreground); }
+.md code { font-family: var(--font-mono); font-size: 0.85em; background: var(--muted); padding: 0.1em 0.35em; border-radius: 4px; }
+.md pre { background: var(--muted); padding: 0.8rem 1rem; border-radius: 8px; overflow-x: auto; }
+.md pre code { background: none; padding: 0; }
+.md blockquote { border-left: 3px solid var(--border); padding-left: 1rem; color: var(--muted-foreground); }
+.md table { border-collapse: collapse; margin: 0.8rem 0; display: block; overflow-x: auto; }
+.md th, .md td { border: 1px solid var(--border); padding: 0.35rem 0.6rem; text-align: left; }
+.md a { color: var(--color-brand); text-decoration: underline; }
+/* Page break */
+.md hr { border: 0; margin: 2rem 0; height: 1px; background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 14px); position: relative; overflow: visible; }
+.md hr::after { content: "page break"; position: absolute; left: 50%; top: -0.6rem; transform: translateX(-50%); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-foreground); background: var(--card); padding: 0 0.5rem; }
+
+.ProseMirror { outline: none; min-height: 50vh; }
+.ProseMirror hr.ProseMirror-selectednode { background: var(--color-brand); }
+.comment-hl { background: rgb(244 166 58 / 0.18); border-bottom: 2px solid #F4A63A; border-radius: 2px; cursor: pointer; }
+.comment-hl.active { background: rgb(244 166 58 / 0.34); }
+
+.checker { background: #fff repeating-conic-gradient(#e9edf2 0% 25%, #fff 0% 50%) 0 0 / 24px 24px; }
+
+/* Script: a document, not an app panel. Serif body, Geist headings, scene headings as labels. */
+.script.md { font-family: var(--font-serif); font-size: 18px; line-height: 1.65; color: #E4E4E6; }
+.script.md h1, .script.md h2, .script.md h3 { font-family: var(--font-sans); color: #F4F4F5; }
+.script.md h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 14px; }
+.script.md h2 { font-size: 21px; font-weight: 650; letter-spacing: -0.01em; margin: 28px 0 10px; }
+.script.md h3 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1A8; margin: 26px 0 8px; }
+/* Bold and italic in a script are emphasis the voiceover hits, so they carry the accent (italic a lighter amber). */
+.script.md strong { font-weight: 650; color: var(--color-brand); }
+.script.md em { color: #FFC46B; }
+.script.md strong em, .script.md em strong { color: var(--color-brand); }
+.script.md hr::after { background: var(--card); font-family: var(--font-sans); }
+::selection { background: rgb(244 166 58 / 0.3); }

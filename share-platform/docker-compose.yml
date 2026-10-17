@@ -1,0 +1,25 @@
+# Share platform in Docker. Everything is a bind mount from this Mac (no Docker volumes):
+#   ./ (code, read-only) · ../projects (videos, read-write) · ../.cache/share-platform (stream copies)
+# Start: docker compose up -d --build   Stop: docker compose down
+services:
+  share:
+    build: .
+    image: clauvid-share:local
+    container_name: clauvid-share
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4747:4747"   # this Mac only; not reachable from the network
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+        read_only: true
+      - type: bind
+        source: ../projects
+        target: /data/projects
+      - type: bind
+        source: ../.cache/share-platform
+        target: /data/proxies
+    environment:
+      VIEWER_USER: ${VIEWER_USER:-}
+      VIEWER_PASS: ${VIEWER_PASS:-}

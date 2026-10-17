@@ -1,6 +1,6 @@
 # Installed for clauvid
 
-Log of everything installed to set up video-making with code. Use this to audit or remove things later.
+Log of everything installed to set up video-making with code. Use this to audit or remove things later. On a fresh clone, `./setup.sh` installs all of it (same versions); `./setup.sh --check` reports what is missing.
 Setup date: 2026-10-03. Already present before setup (not installed by us): Node v24.12.0, npm 11.6.2, FFmpeg 8.0.1, Python 3.14.2, Homebrew, Docker Desktop app, Google Chrome.
 
 ## Homebrew formulae (system-wide)

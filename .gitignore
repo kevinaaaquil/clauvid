@@ -13,6 +13,7 @@
 /.claude/*
 !/.claude/settings.json
 !/.claude/skills/
+*.cache
 
 # Inside the platform: build output, dependencies and credentials.
 /share-platform/dist/

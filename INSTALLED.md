@@ -78,6 +78,17 @@ No models, packages or global tools were installed. Kokoro, whisper `small.en` a
 
 Nothing new installed or downloaded. Kokoro (`bm_george`, from the existing `voices-v1.0.bin`), whisper `small.en`, the cached Inter webfonts and the existing MusicGen raw bed were all reused. The grain overlay is the already-installed registry component, inlined into `source/index.html` (CSS keyframes, seeked by the HyperFrames runtime; `npm run check` passes).
 
+## Reinstalled: Kokoro voice stack (2026-10-18, for AI-voiced videos)
+
+The owner asked for AI voices on `things-explained/test-2`, so Kokoro is back (free, local, no API key).
+
+| What | Where | Size | Remove |
+|---|---|---|---|
+| Python packages `kokoro-onnx` 0.6.1, `onnxruntime` 1.31.0, `espeakng-loader` 0.2.4, `phonemizer` 3.4.0 | `.venv-media/` | ~100 MB | `uv pip uninstall --python .venv-media/bin/python kokoro-onnx onnxruntime espeakng-loader phonemizer` |
+| Kokoro-82M model + voice pack (downloaded by `hyperframes tts` on first use) | `.cache/hyperframes/tts/` | 348 MB | `rm -rf .cache/hyperframes/tts` |
+
+Also in `setup.sh` (full mode). Voice used: `am_michael` at speed 1.22 (test-2 v01).
+
 ## Removed: Kokoro voice stack (2026-10-17, to save storage)
 
 The owner records their own voiceovers now, so the local AI voice was removed. About 450 MB freed.

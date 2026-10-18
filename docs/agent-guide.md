@@ -21,7 +21,7 @@ clauvid/
 ├── docs/                ← specs and plans (share platform v2)
 ├── bin/manim            ← Manim wrapper (venv + LaTeX on PATH)
 ├── (voices/ removed 2026-10-17; see INSTALLED.md)
-├── .venv-media/         ← Python 3.12: MusicGen, Manim (Kokoro removed)
+├── .venv-media/         ← Python 3.12: MusicGen, Manim, Kokoro TTS
 ├── .tools/              ← TinyTeX (LaTeX), uv-managed Python 3.12
 ├── .cache/              ← model caches: hyperframes (Chrome, whisper), huggingface (MusicGen), uv
 ├── .claude/skills/      ← clauvid skills: make-video, share-platform, voiceover-sync
@@ -60,7 +60,7 @@ The owner uploads photos and references through the share platform's **Assets** 
 |---|---|---|
 | Main video framework | **HyperFrames** (HTML + CSS + GSAP → MP4) | In `source/`: `npm run check`, `npm run render`, `npm run dev` (preview). The CLI is `npx --yes hyperframes <cmd>` (0.8.168; a project's `package.json` may pin an older one). |
 | Math/science animation | **Manim** + TinyTeX (LaTeX) | `clauvid/bin/manim -qh scene.py SceneName` (always use the wrapper; it puts LaTeX on PATH). Drop the MP4 into a HyperFrames comp as a clip, or use it standalone. |
-| Voiceover | Owner records it | Recorded in the share platform's Script tab. Align it to the script with the `voiceover-sync` skill. (Kokoro TTS was removed 2026-10-17; reinstall steps in `INSTALLED.md`.) |
+| Voiceover | Owner records it, or AI voice when asked | Owner takes are recorded in the share platform's Script tab. AI voice: `npx hyperframes tts <text.txt> -v am_michael -o …` (local Kokoro, free), loudness-normalised to -16 LUFS and saved as `assets/<script>_takeN.wav` so the platform treats it as a take. Either way, align it with the `voiceover-sync` skill. |
 | Background music (local, open source) | **MusicGen** | Via the `media-use` skill (`resolve` BGM → generate on catalog miss). Keep music ducked under narration (`hyperframes-audio` skill). |
 | Captions | **whisper.cpp** (`small.en`) | `voiceover-sync` writes `research/<take>.captions.json`: transcript timing, script spelling. |
 | Launch video for a repo | `/brag` plugin | Run `/brag` inside the target repo; copy `brag-output/brag.mp4` into a project's `revisions/`. |

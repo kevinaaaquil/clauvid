@@ -6,7 +6,7 @@
 #   ./setup.sh            everything (~5 GB of downloads on a fresh machine)
 #   ./setup.sh --minimal  only what voiceover-sync, HyperFrames and the share platform need
 #                         (Homebrew tools, whisper model, HyperFrames Chrome); skips Python,
-#                         Manim, TinyTeX and MusicGen
+#                         Manim, TinyTeX, MusicGen and Kokoro TTS
 #   ./setup.sh --check    report what's installed and what's missing; changes nothing
 #
 # Needs: macOS, Homebrew, Node 20+, curl. See INSTALLED.md for what each piece is for.
@@ -32,7 +32,7 @@ export HYPERFRAMES_FONT_CACHE_DIR="$ROOT/.cache/hyperframes/fonts"
 
 BREW_PKGS=(ffmpeg whisper-cpp uv pkgconf cairo pango)
 PY_PKGS=(torch==2.14.1 transformers==5.18.0 manim==0.21.0 numpy==2.5.3 scipy==1.18.1
-         soundfile==0.14.0 pydub==0.25.1 yt-dlp==2026.8.19)
+         soundfile==0.14.0 pydub==0.25.1 yt-dlp==2026.8.19 kokoro-onnx==0.6.1)
 WHISPER_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin"
 WHISPER_FILE="$ROOT/.cache/hyperframes/whisper/models/ggml-small.en.bin"
 WHISPER_SHA256="c6138d6d58ecc8322097e0f987c32f1be8bb0a18532a3f88f734d1bbf9c41e5d"
@@ -103,8 +103,8 @@ else miss "headless Chrome"; fi
 
 if [ "$MODE" != minimal ]; then
   # -------------------------------------------------------------- python
-  step "Python 3.12 venv (.venv-media): Manim, MusicGen runtime"
-  if "$HYPERFRAMES_PYTHON" -c "import torch, transformers, manim, soundfile, scipy" >/dev/null 2>&1; then
+  step "Python 3.12 venv (.venv-media): Manim, MusicGen, Kokoro TTS runtime"
+  if "$HYPERFRAMES_PYTHON" -c "import torch, transformers, manim, soundfile, scipy, kokoro_onnx" >/dev/null 2>&1; then
     ok ".venv-media ($("$HYPERFRAMES_PYTHON" -V 2>&1))"
   elif doing; then
     command -v uv >/dev/null || die "uv missing; the Homebrew step should have installed it."

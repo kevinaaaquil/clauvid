@@ -152,5 +152,5 @@ if [ "$MODE" = check ]; then
   [ "$MISSING" -eq 0 ] && ok "everything is installed" || echo "  $MISSING missing. Run ./setup.sh$([ "$MODE" = minimal ] && echo ' --minimal') to install."
 else
   [ "$MISSING" -eq 0 ] && ok "toolchain ready" || echo "  $MISSING item(s) need attention (see • above)."
-  echo "  Start the share platform: share-platform/start.sh → http://localhost:4747"
+  echo "  Start the share platform: ./run.sh → http://localhost:4747"
 fi

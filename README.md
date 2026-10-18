@@ -45,10 +45,10 @@ You need macOS, [Homebrew](https://brew.sh), Node 20+ and [Docker Desktop](https
 ```bash
 git clone https://github.com/kevinaaaquil/clauvid.git && cd clauvid
 ./setup.sh                     # installs the video toolchain into this folder (safe to re-run)
-share-platform/start.sh        # opens the platform at http://localhost:4747
+./run.sh                       # starts the platform at http://localhost:4747
 ```
 
-`setup.sh` installs everything locally inside the clone: ffmpeg, whisper (speech-to-text) and its model, the HyperFrames renderer, Manim with LaTeX, and MusicGen for background music. A fresh machine downloads about 5 GB. `./setup.sh --minimal` installs only what's needed for voiceover and captions, and `./setup.sh --check` just reports what's there. `share-platform/start.sh --native` runs the platform without Docker.
+`setup.sh` installs everything locally inside the clone: ffmpeg, whisper (speech-to-text) and its model, the HyperFrames renderer, Manim with LaTeX, and MusicGen for background music. A fresh machine downloads about 5 GB. `./setup.sh --minimal` installs only what's needed for voiceover and captions, and `./setup.sh --check` just reports what's there. `./run.sh --native` runs the platform without Docker; `./run.sh stop`, `restart`, `status` and `logs` do what they say.
 
 Then open Claude Code in the folder and ask for a video, e.g. *"Make a reel for the cds video from my take."*
 
@@ -61,6 +61,7 @@ Only the platform and its tooling. Your projects (scripts, recordings, assets, d
 | `share-platform/` | The review platform: a dependency-free Node server and a React + shadcn/ui front end, run in Docker |
 | `.claude/skills/` | Agent skills: how to make a video, how to work with the platform, how to sync visuals to a voice take |
 | `setup.sh` | One-step toolchain install |
+| `run.sh` | Start, stop, restart or check the platform |
 | `docs/` | [Agent guide](docs/agent-guide.md) (workflow and house rules), platform design spec and plan |
 | `INSTALLED.md` | Everything the toolchain installs, why, and how to remove it |
 

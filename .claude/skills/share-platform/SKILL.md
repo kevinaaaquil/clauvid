@@ -54,7 +54,7 @@ Never review the proxies in `.cache/share-platform/`; always the original.
 
 ## Platform health
 
-- Up? `curl -s localhost:4747/api/whoami` → `{"canEdit":true}`. Down → `share-platform/start.sh`.
+- Up? `curl -s localhost:4747/api/whoami` → `{"canEdit":true}`. Down → `./run.sh` (stop with `./run.sh stop`).
 - Changed `share-platform/server.mjs` or `lib/`? `cd share-platform && docker compose restart`, or the old API keeps serving.
 - Changed `share-platform/ui/`? `cd share-platform/ui && npm run build` (no restart).
 - Tests: `node --test 'share-platform/test/*.test.mjs'`.
